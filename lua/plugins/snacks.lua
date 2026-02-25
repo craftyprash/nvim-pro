@@ -31,6 +31,7 @@ return {
 					{ icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
 					{ icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.picker.grep()" },
 					{ icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.picker.recent()" },
+					{ icon = " ", key = "p", desc = "Projects", action = ":lua Snacks.picker.zoxide()" },
 					{
 						icon = " ",
 						key = "c",
@@ -240,6 +241,13 @@ return {
 				Snacks.picker.colorschemes()
 			end,
 			desc = "Colorschemes",
+		},
+		{
+			"<leader>fp",
+			function()
+				Snacks.picker.zoxide()
+			end,
+			desc = "Projects (zoxide)",
 		},
 		-- Terminal
 		{
