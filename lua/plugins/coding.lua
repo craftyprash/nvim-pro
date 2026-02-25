@@ -1,3 +1,4 @@
+-- Coding enhancements
 return {
 	-- Comment.nvim - Easy commenting
 	{
