@@ -36,11 +36,9 @@ return {
 				pattern = "java",
 				callback = function()
 					local root_markers = {
-						"gradlew",
-						"mvnw",
-						"pom.xml",
-						"build.gradle",
 						".git",
+						"mvnw",
+						"gradlew",
 					}
 
 					-- IMPORTANT: use current buffer path, not cwd
@@ -90,9 +88,21 @@ return {
 
 						root_dir = root_dir,
 
+						init_options = {
+							bundles = {},
+						},
+
 						settings = {
 							java = {
+								import = {
+									maven = { enabled = true },
+									gradle = { enabled = true },
+								},
+								maven = {
+									downloadSources = true,
+								},
 								configuration = {
+									updateBuildConfiguration = "automatic",
 									runtimes = {
 										{
 											name = "JavaSE-21",
@@ -115,6 +125,36 @@ return {
 		priority = 900,
 		dependencies = { "williamboman/mason.nvim" },
 		config = function()
+			-- Wrap vim.lsp.foldexpr to auto-fold Java imports
+			do
+				local orig_foldexpr = vim.lsp.foldexpr
+				vim.lsp.foldexpr = function(lnum)
+					local level = orig_foldexpr(lnum)
+					local bufnr = vim.api.nvim_get_current_buf()
+
+					if
+						vim.bo[bufnr].filetype == "java"
+						and not vim.b[bufnr].imports_folded
+						and level and level:match("^>")
+					then
+						vim.b[bufnr].imports_folded = true
+						vim.schedule(function()
+							if not vim.api.nvim_buf_is_valid(bufnr) then
+								return
+							end
+							local view = vim.fn.winsaveview()
+							vim.cmd("silent! normal! zx")
+							vim.cmd("normal! gg")
+							if vim.fn.search("^import ", "W") > 0 then
+								pcall(vim.cmd, "normal! zc")
+							end
+							vim.fn.winrestview(view)
+						end)
+					end
+					return level
+				end
+			end
+
 			-- LSP keybindings
 			vim.api.nvim_create_autocmd("LspAttach", {
 				callback = function(args)
@@ -143,21 +183,6 @@ return {
 							{ bufnr = args.buf }
 						)
 					end, opts)
-
-					-- Fold Java imports after LSP attaches
-					if vim.bo[args.buf].filetype == "java" then
-						vim.schedule(function()
-							if not vim.api.nvim_buf_is_valid(args.buf) then
-								return
-							end
-							local lines = vim.api.nvim_buf_get_lines(args.buf, 0, -1, false)
-							for i, line in ipairs(lines) do
-								if line:match("^import ") and vim.fn.foldclosed(i) == -1 then
-									pcall(vim.cmd, i .. "foldclose")
-								end
-							end
-						end)
-					end
 				end,
 			})
 
