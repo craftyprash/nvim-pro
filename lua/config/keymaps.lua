@@ -112,5 +112,8 @@ map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New file" })
 -- Quickfix and location list
 map("n", "[q", vim.cmd.cprev, { desc = "Previous quickfix" })
 map("n", "]q", vim.cmd.cnext, { desc = "Next quickfix" })
-map("n", "<leader>xq", "<cmd>copen<cr>", { desc = "Quickfix List" })
-map("n", "<leader>xl", "<cmd>lopen<cr>", { desc = "Location List" })
+map("n", "<leader>xq", "<cmd>cclose<cr>", { desc = "Close Quickfix" })
+map("n", "<leader>xl", "<cmd>lclose<cr>", { desc = "Close Location List" })
+
+-- Visual paste without yanking deleted text
+map("x", "p", '"_dP', { desc = "Paste without yank" })
