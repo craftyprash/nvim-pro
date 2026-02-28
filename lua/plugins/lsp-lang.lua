@@ -58,6 +58,14 @@ return {
 
 					local lombok_path = mason_path .. "/lombok.jar"
 
+					-- Debug adapter bundles
+					local bundles = {}
+					local java_debug_path = vim.fn.stdpath("data") .. "/mason/packages/java-debug-adapter"
+					local java_debug_jar = vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar")
+					if java_debug_jar ~= "" then
+						table.insert(bundles, java_debug_jar)
+					end
+
 					local config = {
 						cmd = {
 							"java",
@@ -89,7 +97,7 @@ return {
 						root_dir = root_dir,
 
 						init_options = {
-							bundles = {},
+							bundles = bundles,
 						},
 
 						settings = {
@@ -115,6 +123,23 @@ return {
 					}
 
 					jdtls.start_or_attach(config)
+
+					-- Setup Java debug configurations
+					vim.schedule(function()
+						local ok, dap = pcall(require, "dap")
+						if ok then
+							dap.configurations.java = {
+								{
+									type = "java",
+									request = "launch",
+									name = "Debug (Attach) - Remote",
+									hostName = "127.0.0.1",
+									port = 5005,
+								},
+							}
+							require("jdtls.dap").setup_dap_main_class_configs()
+						end
+					end)
 				end,
 			})
 		end,
@@ -293,6 +318,10 @@ return {
 				"stylua",
 				"prettier",
 				"google-java-format",
+				-- Debug adapters
+				"java-debug-adapter",
+				"delve",
+				"codelldb",
 			}
 			local function install_tools()
 				for _, tool in ipairs(ensure_installed) do
