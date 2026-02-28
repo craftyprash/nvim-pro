@@ -1,28 +1,26 @@
--- # Debug Keymaps
--- <leader>db  → Toggle breakpoint
--- <leader>dc  → Continue/Start
--- <leader>di  → Step into
--- <leader>do  → Step over
--- <leader>dO  → Step out
--- <leader>dt  → Terminate
--- <leader>dr  → REPL toggle
--- <leader>du  → Toggle UI
--- <leader>dh  → Hover (eval under cursor)
+-- # Debug Keymaps (VSCode/Zed style)
+-- F5       → Continue/Start
+-- S-F5     → Terminate
+-- F9       → Toggle breakpoint
+-- F10      → Step over
+-- F11      → Step into
+-- S-F11    → Step out
+-- <leader>du → Toggle UI
+-- <leader>de → Eval (hover)
 
 return {
 	{
 		"mfussenegger/nvim-dap",
 		dependencies = { "rcarriga/nvim-dap-ui", "nvim-neotest/nvim-nio" },
 		keys = {
-			{ "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
-			{ "<leader>dc", function() require("dap").continue() end, desc = "Continue" },
-			{ "<leader>di", function() require("dap").step_into() end, desc = "Step Into" },
-			{ "<leader>do", function() require("dap").step_over() end, desc = "Step Over" },
-			{ "<leader>dO", function() require("dap").step_out() end, desc = "Step Out" },
-			{ "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
-			{ "<leader>dr", function() require("dap").repl.toggle() end, desc = "REPL" },
+			{ "<F5>", function() require("dap").continue() end, desc = "Continue" },
+			{ "<S-F5>", function() require("dap").terminate() end, desc = "Terminate" },
+			{ "<F9>", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
+			{ "<F10>", function() require("dap").step_over() end, desc = "Step Over" },
+			{ "<F11>", function() require("dap").step_into() end, desc = "Step Into" },
+			{ "<S-F11>", function() require("dap").step_out() end, desc = "Step Out" },
 			{ "<leader>du", function() require("dapui").toggle() end, desc = "Toggle UI" },
-			{ "<leader>dh", function() require("dap.ui.widgets").hover() end, desc = "Hover" },
+			{ "<leader>de", function() require("dap.ui.widgets").hover() end, desc = "Eval" },
 		},
 		config = function()
 			local dap = require("dap")
@@ -110,19 +108,11 @@ return {
 				},
 			})
 
-			-- Auto-open UI on debug start
-			dap.listeners.before.attach.dapui_config = function()
-				dapui.open()
-			end
-			dap.listeners.before.launch.dapui_config = function()
-				dapui.open()
-			end
-			dap.listeners.before.event_terminated.dapui_config = function()
-				dapui.close()
-			end
-			dap.listeners.before.event_exited.dapui_config = function()
-				dapui.close()
-			end
+			-- Auto-open/close UI
+			dap.listeners.before.attach.dapui_config = function() dapui.open() end
+			dap.listeners.before.launch.dapui_config = function() dapui.open() end
+			dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
+			dap.listeners.before.event_exited.dapui_config = function() dapui.close() end
 		end,
 	},
 }
