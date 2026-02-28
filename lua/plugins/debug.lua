@@ -6,11 +6,13 @@
 -- <leader>dO  → Step out
 -- <leader>dt  → Terminate
 -- <leader>dr  → REPL toggle
+-- <leader>du  → Toggle UI
 -- <leader>dh  → Hover (eval under cursor)
 
 return {
 	{
 		"mfussenegger/nvim-dap",
+		dependencies = { "rcarriga/nvim-dap-ui", "nvim-neotest/nvim-nio" },
 		keys = {
 			{ "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
 			{ "<leader>dc", function() require("dap").continue() end, desc = "Continue" },
@@ -19,6 +21,7 @@ return {
 			{ "<leader>dO", function() require("dap").step_out() end, desc = "Step Out" },
 			{ "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
 			{ "<leader>dr", function() require("dap").repl.toggle() end, desc = "REPL" },
+			{ "<leader>du", function() require("dapui").toggle() end, desc = "Toggle UI" },
 			{ "<leader>dh", function() require("dap.ui.widgets").hover() end, desc = "Hover" },
 		},
 		config = function()
@@ -82,6 +85,44 @@ return {
 					stopOnEntry = false,
 				},
 			}
+
+			-- Setup dap-ui
+			local dapui = require("dapui")
+			dapui.setup({
+				layouts = {
+					{
+						elements = {
+							{ id = "scopes", size = 0.4 },
+							{ id = "breakpoints", size = 0.2 },
+							{ id = "stacks", size = 0.4 },
+						},
+						size = 40,
+						position = "left",
+					},
+					{
+						elements = {
+							{ id = "repl", size = 0.5 },
+							{ id = "console", size = 0.5 },
+						},
+						size = 10,
+						position = "bottom",
+					},
+				},
+			})
+
+			-- Auto-open UI on debug start
+			dap.listeners.before.attach.dapui_config = function()
+				dapui.open()
+			end
+			dap.listeners.before.launch.dapui_config = function()
+				dapui.open()
+			end
+			dap.listeners.before.event_terminated.dapui_config = function()
+				dapui.close()
+			end
+			dap.listeners.before.event_exited.dapui_config = function()
+				dapui.close()
+			end
 		end,
 	},
 }
