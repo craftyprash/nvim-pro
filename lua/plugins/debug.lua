@@ -1,26 +1,104 @@
--- # Debug Keymaps (VSCode/Zed style)
--- F5       → Continue/Start
--- S-F5     → Terminate
--- F9       → Toggle breakpoint
--- F10      → Step over
--- F11      → Step into
--- S-F11    → Step out
+-- # Debug Keymaps (Hybrid: F-keys + Leader)
+-- F5         → Continue
+-- F9         → Toggle breakpoint
+-- F10        → Step over
+-- F11        → Step into
+-- F12        → Step out
+-- <leader>dB → Conditional breakpoint
+-- <leader>dC → Run to cursor
+-- <leader>dt → Terminate
 -- <leader>du → Toggle UI
 -- <leader>de → Eval (hover)
+-- <leader>dr → REPL
 
 return {
 	{
 		"mfussenegger/nvim-dap",
-		dependencies = { "rcarriga/nvim-dap-ui", "nvim-neotest/nvim-nio" },
+		dependencies = {
+			"rcarriga/nvim-dap-ui",
+			"nvim-neotest/nvim-nio",
+			"theHamsta/nvim-dap-virtual-text",
+		},
 		keys = {
-			{ "<F5>", function() require("dap").continue() end, desc = "Continue" },
-			{ "<S-F5>", function() require("dap").terminate() end, desc = "Terminate" },
-			{ "<F9>", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
-			{ "<F10>", function() require("dap").step_over() end, desc = "Step Over" },
-			{ "<F11>", function() require("dap").step_into() end, desc = "Step Into" },
-			{ "<S-F11>", function() require("dap").step_out() end, desc = "Step Out" },
-			{ "<leader>du", function() require("dapui").toggle() end, desc = "Toggle UI" },
-			{ "<leader>de", function() require("dap.ui.widgets").hover() end, desc = "Eval" },
+			-- F-keys (frequent actions)
+			{
+				"<F5>",
+				function()
+					require("dap").continue()
+				end,
+				desc = "Continue",
+			},
+			{
+				"<F9>",
+				function()
+					require("dap").toggle_breakpoint()
+				end,
+				desc = "Toggle Breakpoint",
+			},
+			{
+				"<F10>",
+				function()
+					require("dap").step_over()
+				end,
+				desc = "Step Over",
+			},
+			{
+				"<F11>",
+				function()
+					require("dap").step_into()
+				end,
+				desc = "Step Into",
+			},
+			{
+				"<F12>",
+				function()
+					require("dap").step_out()
+				end,
+				desc = "Step Out",
+			},
+			-- Leader keys (advanced features)
+			{
+				"<leader>dB",
+				function()
+					require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
+				end,
+				desc = "Conditional Breakpoint",
+			},
+			{
+				"<leader>dC",
+				function()
+					require("dap").run_to_cursor()
+				end,
+				desc = "Run to Cursor",
+			},
+			{
+				"<leader>dt",
+				function()
+					require("dap").terminate()
+				end,
+				desc = "Terminate",
+			},
+			{
+				"<leader>du",
+				function()
+					require("dapui").toggle()
+				end,
+				desc = "Toggle UI",
+			},
+			{
+				"<leader>de",
+				function()
+					require("dap.ui.widgets").hover()
+				end,
+				desc = "Eval",
+			},
+			{
+				"<leader>dr",
+				function()
+					require("dap").repl.toggle()
+				end,
+				desc = "REPL",
+			},
 		},
 		config = function()
 			local dap = require("dap")
@@ -109,10 +187,21 @@ return {
 			})
 
 			-- Auto-open/close UI
-			dap.listeners.before.attach.dapui_config = function() dapui.open() end
-			dap.listeners.before.launch.dapui_config = function() dapui.open() end
-			dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
-			dap.listeners.before.event_exited.dapui_config = function() dapui.close() end
+			dap.listeners.before.attach.dapui_config = function()
+				dapui.open()
+			end
+			dap.listeners.before.launch.dapui_config = function()
+				dapui.open()
+			end
+			dap.listeners.before.event_terminated.dapui_config = function()
+				dapui.close()
+			end
+			dap.listeners.before.event_exited.dapui_config = function()
+				dapui.close()
+			end
+
+			-- Virtual text
+			require("nvim-dap-virtual-text").setup()
 		end,
 	},
 }
