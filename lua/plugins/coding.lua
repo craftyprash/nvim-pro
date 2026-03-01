@@ -39,11 +39,11 @@ return {
 	},
 
 	-- nvim-autopairs - Auto close brackets (Blink handles this)
-	-- {
-	--   "windwp/nvim-autopairs",
-	--   event = "InsertEnter",
-	--   opts = {},
-	-- },
+	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		opts = {},
+	},
 
 	-- nvim-surround - Add/change/delete surroundings
 	{
