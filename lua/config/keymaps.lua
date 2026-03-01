@@ -2,45 +2,45 @@
 local map = vim.keymap.set
 
 local function resize_mode()
-	print("-- RESIZE MODE (h,j,k,l to resize, Esc to exit) --")
-	while true do
-		local char = vim.fn.getchar()
-		local key = vim.fn.nr2char(char)
+  print("-- RESIZE MODE (h,j,k,l to resize, Esc to exit) --")
+  while true do
+    local char = vim.fn.getchar()
+    local key = vim.fn.nr2char(char)
 
-		if key == "h" then
-			-- If at left edge, shrink right; otherwise grow left
-			if vim.fn.winnr() == vim.fn.winnr("h") then
-				vim.cmd("vertical resize -2")
-			else
-				vim.cmd("vertical resize +2")
-			end
-		elseif key == "j" then
-			-- If at bottom edge, shrink up; otherwise grow down
-			if vim.fn.winnr() == vim.fn.winnr("j") then
-				vim.cmd("resize -2")
-			else
-				vim.cmd("resize +2")
-			end
-		elseif key == "k" then
-			-- If at top edge, shrink down; otherwise grow up
-			if vim.fn.winnr() == vim.fn.winnr("k") then
-				vim.cmd("resize -2")
-			else
-				vim.cmd("resize +2")
-			end
-		elseif key == "l" then
-			-- If at right edge, shrink left; otherwise grow right
-			if vim.fn.winnr() == vim.fn.winnr("l") then
-				vim.cmd("vertical resize -2")
-			else
-				vim.cmd("vertical resize +2")
-			end
-		else
-			break
-		end
-		vim.cmd("redraw")
-	end
-	print("-- EXIT RESIZE MODE --")
+    if key == "h" then
+      -- If at left edge, shrink right; otherwise grow left
+      if vim.fn.winnr() == vim.fn.winnr("h") then
+        vim.cmd("vertical resize -2")
+      else
+        vim.cmd("vertical resize +2")
+      end
+    elseif key == "j" then
+      -- If at bottom edge, shrink up; otherwise grow down
+      if vim.fn.winnr() == vim.fn.winnr("j") then
+        vim.cmd("resize -2")
+      else
+        vim.cmd("resize +2")
+      end
+    elseif key == "k" then
+      -- If at top edge, shrink down; otherwise grow up
+      if vim.fn.winnr() == vim.fn.winnr("k") then
+        vim.cmd("resize -2")
+      else
+        vim.cmd("resize +2")
+      end
+    elseif key == "l" then
+      -- If at right edge, shrink left; otherwise grow right
+      if vim.fn.winnr() == vim.fn.winnr("l") then
+        vim.cmd("vertical resize -2")
+      else
+        vim.cmd("vertical resize +2")
+      end
+    else
+      break
+    end
+    vim.cmd("redraw")
+  end
+  print("-- EXIT RESIZE MODE --")
 end
 
 -- Better up/down (handle wrapped lines)
