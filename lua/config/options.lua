@@ -46,12 +46,12 @@ opt.sidescrolloff = 8
 opt.conceallevel = 2 -- Hide markup in markdown/json (0=show all, 2=hide, 3=hide completely)
 opt.confirm = true -- Confirm before closing unsaved buffers
 opt.fillchars = {
-	foldopen = "",
-	foldclose = "",
-	fold = " ",
-	foldsep = " ",
-	diff = "╱",
-	eob = " ",
+  foldopen = "",
+  foldclose = "",
+  fold = " ",
+  foldsep = " ",
+  diff = "╱",
+  eob = " ",
 }
 opt.foldlevel = 99
 opt.foldlevelstart = 99
@@ -103,12 +103,12 @@ vim.o.winborder = "rounded"
 
 -- Show diagnostics in sign column nicely
 vim.diagnostic.config({
-	severity_sort = true,
-	underline = true,
-	update_in_insert = false,
-	virtual_text = {
-		spacing = 2,
-		prefix = "●",
-	},
-	float = { border = "rounded" },
+  severity_sort = true,
+  underline = true,
+  update_in_insert = false,
+  virtual_text = {
+    spacing = 2,
+    prefix = "●",
+  },
+  float = { border = "rounded" },
 })
