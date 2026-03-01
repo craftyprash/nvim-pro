@@ -117,3 +117,6 @@ map("n", "<leader>xl", "<cmd>lclose<cr>", { desc = "Close Location List" })
 
 -- Visual paste without yanking deleted text
 map("x", "p", '"_dP', { desc = "Paste without yank" })
+
+-- Render Markdown Preview RenderMarkdown
+map("n", "<leader>mp", "<cmd>RenderMarkdown toggle<cr>", { desc = "Markdown Preview" })
