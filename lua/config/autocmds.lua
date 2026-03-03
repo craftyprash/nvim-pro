@@ -100,3 +100,46 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
     vim.opt_local.conceallevel = 0
   end,
 })
+
+-- Smart directory detection: set cwd to project root or directory argument
+vim.api.nvim_create_autocmd("VimEnter", {
+  group = augroup("smart_cwd"),
+  callback = function()
+    local arg = vim.fn.argv(0)
+    if arg == "" then
+      return
+    end
+
+    -- Handle oil:// URLs from Oil.nvim
+    local dir
+    if arg:match("^oil://") then
+      dir = arg:gsub("^oil://", "")
+      -- Remove trailing slash
+      dir = dir:gsub("/$", "")
+    elseif vim.fn.isdirectory(arg) == 1 then
+      dir = vim.fn.fnamemodify(arg, ":p")
+    elseif vim.fn.filereadable(arg) == 1 then
+      dir = vim.fn.fnamemodify(arg, ":p:h")
+    else
+      return
+    end
+
+    -- Search for .git directory up the tree
+    local function find_git_root(path)
+      local git_path = path .. "/.git"
+      if vim.fn.isdirectory(git_path) == 1 or vim.fn.filereadable(git_path) == 1 then
+        return path
+      end
+      local parent = vim.fn.fnamemodify(path, ":h")
+      if parent == path then
+        return nil
+      end
+      return find_git_root(parent)
+    end
+
+    local root = find_git_root(dir) or dir
+    vim.schedule(function()
+      vim.cmd.cd(root)
+    end)
+  end,
+})
