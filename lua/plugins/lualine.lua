@@ -37,6 +37,7 @@ return {
         lualine_c = {
           {
             "diagnostics", -- Shows count of errors, warnings, hints, info from LSP/linters
+            sources = { "nvim_workspace_diagnostic" }, -- Shows all workspace diagnostics
             symbols = {
               error = icons.diagnostics.Error,
               warn = icons.diagnostics.Warn,
