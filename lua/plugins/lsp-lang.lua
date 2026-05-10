@@ -42,8 +42,7 @@ return {
           }
 
           -- IMPORTANT: use current buffer path, not cwd
-          local root_dir =
-            require("lspconfig.util").root_pattern(unpack(root_markers))(vim.api.nvim_buf_get_name(0))
+          local root_dir = require("lspconfig.util").root_pattern(unpack(root_markers))(vim.api.nvim_buf_get_name(0))
 
           if not root_dir then
             return
@@ -61,7 +60,8 @@ return {
           -- Debug adapter bundles
           local bundles = {}
           local java_debug_path = vim.fn.stdpath("data") .. "/mason/packages/java-debug-adapter"
-          local java_debug_jar = vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar")
+          local java_debug_jar =
+            vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar")
           if java_debug_jar ~= "" then
             table.insert(bundles, java_debug_jar)
           end
@@ -157,11 +157,7 @@ return {
           local level = orig_foldexpr(lnum)
           local bufnr = vim.api.nvim_get_current_buf()
 
-          if
-            vim.bo[bufnr].filetype == "java"
-            and not vim.b[bufnr].imports_folded
-            and level and level:match("^>")
-          then
+          if vim.bo[bufnr].filetype == "java" and not vim.b[bufnr].imports_folded and level and level:match("^>") then
             vim.b[bufnr].imports_folded = true
             vim.schedule(function()
               if not vim.api.nvim_buf_is_valid(bufnr) then
@@ -203,10 +199,7 @@ return {
 
           -- Inlay hints toggle
           map("n", "<leader>ih", function()
-            vim.lsp.inlay_hint.enable(
-              not vim.lsp.inlay_hint.is_enabled({ bufnr = args.buf }),
-              { bufnr = args.buf }
-            )
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = args.buf }), { bufnr = args.buf })
           end, opts)
         end,
       })
