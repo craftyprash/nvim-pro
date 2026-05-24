@@ -67,10 +67,16 @@
 ### Git
 - `<leader>gg` - Lazygit
 - `<leader>gb` - Git blame line
-- `<leader>gf` - File history
-- `<leader>gl` - Git log
+- `<leader>gH` - Lazygit file history
+- `<leader>gl` - Git log (Lazygit)
 - `<leader>gc` - Git log (picker)
 - `<leader>gs` - Git status
+- `<leader>gF` - Git files
+
+### Diffview
+- `<leader>gd` - Open diffview (current changes)
+- `<leader>gf` - File history (current file)
+- `<leader>gx` - Close diffview
 
 ### LSP/Diagnostics
 - `<leader>sd` - Workspace diagnostics
@@ -164,7 +170,7 @@
 
 ### Lazygit (Full Git UI)
 - `<leader>gg` - Open Lazygit (main interface)
-- `<leader>gf` - File history in Lazygit
+- `<leader>gH` - File history in Lazygit
 - `<leader>gl` - Git log in Lazygit
 
 **Inside Lazygit:**
@@ -207,6 +213,15 @@
 **Git Blame:**
 - `<leader>gb` - Show blame for current line
 
+### Diffview (In-Editor Diffs)
+- `<leader>gd` - Open diffview (current uncommitted changes)
+- `<leader>gf` - File history of current file
+- `<leader>gx` - Close diffview
+
+**Commands:**
+- `:DiffviewOpen main..HEAD` - Compare branches
+- `:DiffviewFileHistory` - Full repo history
+
 ### Snacks Picker (Git Search)
 - `<leader>gc` - Browse commit history
 - `<leader>gs` - Git status (staged/unstaged files)
@@ -234,15 +249,14 @@
 5. `M` - Merge when ready
 
 **View History:**
-- `<leader>gf` - File history (Lazygit)
+- `<leader>gf` - File history (Diffview, in-editor)
+- `<leader>gH` - File history (Lazygit, TUI)
 - `<leader>gc` - Commit history (Picker)
 - `<leader>gl` - Full log (Lazygit)
 
 **Compare Branches:**
-1. `<leader>gg` - Open Lazygit
-2. `3` - Branches panel
-3. `<Space>` on branch - Checkout
-4. `4` - Commits panel to see diff
+- `:DiffviewOpen main..HEAD` - Side-by-side in Neovim
+- Or `<leader>gg` → Branches panel in Lazygit
 
 ## Editing Enhancements
 
@@ -262,6 +276,13 @@
 - `<leader>ghR` - Reset buffer
 - `<leader>ghp` - Preview hunk
 - `<leader>ghd` - Diff this
+
+## Session Management (persistence.nvim)
+
+- `<leader>qs` - Restore session (current directory)
+- `<leader>qS` - Select session
+- `<leader>ql` - Restore last session
+- `<leader>qd` - Don't save current session
 
 ## Quickfix / Location List
 
