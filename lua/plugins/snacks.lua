@@ -171,7 +171,7 @@ return {
       desc = "Git Blame Line",
     },
     {
-      "<leader>gf",
+      "<leader>gH",
       function()
         Snacks.lazygit.log_file()
       end,
