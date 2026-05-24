@@ -2,6 +2,29 @@
 
 All notable changes to this Neovim configuration will be documented in this file.
 
+## [0.0.2] - 2026-05-24
+
+### Bug Fixes
+
+- Resolve <leader>gf conflict and add missing which-key groups
+
+### Documentation
+
+- Add CONTRIBUTING.md with commit conventions and release workflow
+- Update KEYBINDINGS.md with diffview, session, and fixed git mappings
+- Add tutorials for Neovim workflows, git, and Java development
+
+### Features
+
+- Add which-key.nvim for keybinding discovery
+- Add persistence.nvim for auto session management
+- Add diffview.nvim for in-editor git diffs and file history
+
+### Miscellaneous
+
+- Enable conventional commits for future releases
+- Updates
+
 ## [0.0.1] - 2025-01-09
 
 ### Initial Release
@@ -85,3 +108,4 @@ A minimal yet essential Neovim 0.12 configuration built for modern development w
 - LSP.md: Detailed LSP and debugging documentation
 - KEYBINDINGS.md: Comprehensive keybinding reference
 - stylua.toml: Code formatting configuration (2 spaces)
+
