@@ -83,14 +83,6 @@ return {
       end,
     },
   },
-  {
-    "kdheepak/lazygit.nvim",
-    cmd = { "LazyGit", "LazyGitCurrentFile", "LazyGitFilter" },
-    dependencies = { "nvim-lua/plenary.nvim" },
-    keys = {
-      { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
-    },
-  },
 
   -- nvim-ts-context-commentstring - Context-aware comments
   {
