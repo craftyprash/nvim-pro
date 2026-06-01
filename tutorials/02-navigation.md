@@ -127,9 +127,9 @@ A buffer is neovim's in-memory copy of a file. Every file you open becomes a buf
 
 ### Switching Between Open Buffers
 
-`<S-l>` (Shift+L) goes to the next buffer. `<S-h>` (Shift+H) goes to the previous buffer. These cycle through all open buffers in order.
+`]b` goes to the next buffer. `[b` goes to the previous buffer. These follow the same `[x`/`]x` convention used throughout the config for all navigation (`[d`/`]d` for diagnostics, `[h`/`]h` for git hunks, etc.).
 
-`<leader>bb` is the fastest: it toggles between the last two buffers you were in, like `Alt+Tab` on a desktop. When you jump to a definition and come back, this is what you use.
+`<leader>bb` is the fastest switch: it toggles between the last two buffers you were in, like `Alt+Tab` on a desktop. When you jump to a definition and come back, this is what you use.
 
 `<leader>fb` opens the buffer picker — see all open buffers with preview, type to filter. Use this when you have many files open and want to jump to one that isn't adjacent in the cycle.
 
@@ -137,7 +137,7 @@ A buffer is neovim's in-memory copy of a file. Every file you open becomes a buf
 
 `<leader>bd` deletes the current buffer but keeps the window open (fills it with the previous buffer). This is usually what you want — `:q` would close the window too.
 
-**Try this**: Open three or four Java files using `<leader>ff`. Then use `<S-l>` and `<S-h>` to cycle through them. Use `<leader>bb` to toggle between the last two. Then use `<leader>fb` to pick one by name from the picker.
+**Try this**: Open three or four Java files using `<leader>ff`. Then use `]b` and `[b` to cycle through them. Use `<leader>bb` to toggle between the last two. Then use `<leader>fb` to pick one by name from the picker.
 
 ---
 
@@ -213,8 +213,8 @@ Every time you make a significant jump (open a file, `gd` to a definition, searc
 <leader>-     oil: floating parent directory
 <CR>          oil: open file or directory
 
-<S-h> / [b   previous buffer
-<S-l> / ]b   next buffer
+[b           previous buffer
+]b           next buffer
 <leader>bb    toggle last two buffers
 <leader>bd    delete buffer
 
