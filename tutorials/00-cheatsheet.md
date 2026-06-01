@@ -47,17 +47,20 @@
 | `{n}G` or `:{n}` | Line n |
 | `<C-d> <C-u>` | Half page down / up |
 | `<C-f> <C-b>` | Full page down / up |
+| `H` | Move cursor to top of visible screen |
 | `M` | Move cursor to middle of visible screen |
+| `L` | Move cursor to bottom of visible screen |
 | `zz` | Scroll: bring current line to centre of screen |
 | `zt` | Scroll: bring current line to top of screen |
 | `zb` | Scroll: bring current line to bottom of screen |
 
-> **Note**: `H` and `L` are remapped in this config — they navigate buffers (`<S-h>` / `<S-l>`), not the screen.
-> `M` is untouched and still moves the cursor to the visible middle.
+> `H`, `M`, `L` move the **cursor** to the top/middle/bottom of what's currently visible.
+> They compose with operators: `dL` deletes to the bottom of the screen, `yH` yanks to the top.
 >
-> `zz / zt / zb` scroll the viewport without moving the cursor's line — useful when you want to
-> read context above/below the current position. These are *not* fold commands (fold commands use
-> `za zo zc zR zM` — different letters after `z`).
+> `zz / zt / zb` scroll the **viewport** without moving the cursor's line — e.g. `zz` recentres
+> the screen around the current line without changing where the cursor is.
+>
+> These are *not* fold commands. Fold commands use `za zo zc zR zM` — different letters after `z`.
 
 ---
 
@@ -223,8 +226,8 @@ Prefix `i` = inner (no surrounding whitespace/delimiters), `a` = around (include
 
 | Key | Action |
 |-----|--------|
-| `<S-h>` or `[b` | Previous buffer |
-| `<S-l>` or `]b` | Next buffer |
+| `[b` | Previous buffer |
+| `]b` | Next buffer |
 | `<leader>bb` | Toggle between last two buffers |
 | `<leader>bd` | Delete buffer (keeps window open) |
 | `<leader>fb` | Fuzzy pick from open buffers |
