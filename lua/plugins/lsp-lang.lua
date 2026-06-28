@@ -237,19 +237,13 @@ return {
 
       -- RUST
       vim.lsp.config("rust_analyzer", {
+        cmd = { "rust-analyzer" },
+        filetypes = { "rust" },
+        root_markers = { "Cargo.toml", "rust-project.json" },
         settings = {
           ["rust-analyzer"] = {
             cargo = { allFeatures = true },
-            -- checkOnSave = true,
-            -- check = { command = "clippy" },
-            checkOnSave = {
-              command = "clippy",
-            },
-            -- inlayHints = {
-            --   bindingModeHints = { enable = true },
-            --   closureReturnTypeHints = { enable = "with_block" },
-            --   lifetimeElisionHints = { enable = "always" },
-            -- },
+            check = { command = "clippy" },
           },
         },
       })
@@ -311,6 +305,7 @@ return {
         "stylua",
         "prettier",
         "google-java-format",
+        "rust-analyzer",
         -- Debug adapters
         "java-debug-adapter",
         "delve",
