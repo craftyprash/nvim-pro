@@ -60,7 +60,7 @@ map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
 map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- Save file
-map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
+-- map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save file" })
 
 -- Buffer navigation ([b/]b follow the vim-unimpaired convention used throughout this config)
 map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev buffer" })

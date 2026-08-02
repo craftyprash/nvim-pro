@@ -103,13 +103,15 @@ return {
     opts = {
       default_file_explorer = true,
       columns = { "icon" },
-      keymaps = {
+      keymaps = vim.tbl_extend("force", opts or {}, {
         ["q"] = "actions.close",
         ["<C-c>"] = "actions.close",
         ["<C-h>"] = false,
-        ["<C-l>"] = false,
+        ["<C-l>"] = "actions.refresh",
         ["<C-r>"] = "actions.refresh",
-      },
+        ["l"] = "actions.select",
+        ["h"] = "actions.parent",
+      }),
       view_options = {
         show_hidden = false,
       },
