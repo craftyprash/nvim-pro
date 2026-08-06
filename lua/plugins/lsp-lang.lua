@@ -31,6 +31,43 @@ return {
       local mason_path = vim.fn.stdpath("data") .. "/mason/packages/jdtls"
       local home = os.getenv("HOME")
 
+      -- Pick the correct Eclipse config dir for this OS + CPU arch.
+      -- Mason ships config_{mac,linux,win} and _arm variants; the previous
+      -- hardcoded "config_mac" broke on Arch Linux and was wrong on Apple Silicon.
+      local function jdtls_config_dir()
+        local arch = vim.uv.os_uname().machine
+        local is_arm = arch == "arm64" or arch == "aarch64"
+        if vim.fn.has("mac") == 1 then
+          return is_arm and "config_mac_arm" or "config_mac"
+        elseif vim.fn.has("win32") == 1 then
+          return "config_win"
+        else
+          return is_arm and "config_linux_arm" or "config_linux"
+        end
+      end
+
+      -- Resolve a specific mise-managed JDK home (nil if not installed).
+      local function mise_java(version)
+        local p = vim.fn.trim(vim.fn.system("mise where java@" .. version))
+        if vim.v.shell_error == 0 and p ~= "" and vim.fn.isdirectory(p) == 1 then
+          return p
+        end
+        return nil
+      end
+
+      -- Register every JDK we have so projects can target either release.
+      -- jdtls itself runs on whatever `java` is on PATH (the active mise JDK).
+      local runtimes = {}
+      for _, r in ipairs({
+        { name = "JavaSE-21", version = "temurin-21" },
+        { name = "JavaSE-25", version = "temurin-25" },
+      }) do
+        local path = mise_java(r.version)
+        if path then
+          table.insert(runtimes, { name = r.name, path = path })
+        end
+      end
+
       -- Autocmd ensures start_or_attach runs for EVERY java buffer
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "java",
@@ -89,7 +126,7 @@ return {
               "-jar",
               launcher,
               "-configuration",
-              mason_path .. "/config_mac",
+              mason_path .. "/" .. jdtls_config_dir(),
               "-data",
               workspace_dir,
             },
@@ -111,12 +148,7 @@ return {
                 },
                 configuration = {
                   updateBuildConfiguration = "automatic",
-                  runtimes = {
-                    {
-                      name = "JavaSE-21",
-                      path = vim.fn.trim(vim.fn.system("mise where java")),
-                    },
-                  },
+                  runtimes = runtimes,
                 },
               },
             },
@@ -188,9 +220,13 @@ return {
           map("n", "gd", vim.lsp.buf.definition, opts)
           map("n", "gD", vim.lsp.buf.declaration, opts)
 
-          -- Diagnostics
-          map("n", "[d", vim.diagnostic.goto_prev, opts)
-          map("n", "]d", vim.diagnostic.goto_next, opts)
+          -- Diagnostics (vim.diagnostic.jump replaces the deprecated goto_prev/goto_next)
+          map("n", "[d", function()
+            vim.diagnostic.jump({ count = -1, float = true })
+          end, opts)
+          map("n", "]d", function()
+            vim.diagnostic.jump({ count = 1, float = true })
+          end, opts)
 
           -- Unified Format (conform)
           map("n", "<leader>f", function()
