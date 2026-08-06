@@ -1,96 +1,33 @@
--- Colorschemes collection
+-- Colorschemes
+--
+-- Active theme: kanagawa (rebelot/kanagawa.nvim), "wave" variant.
+-- Warm, muted, low-saturation palette that's easy on the eyes for late-night
+-- coding; unlike onedark it does NOT paint variables/parameters red, so
+-- parameter-heavy code (Java/Quarkus) stays calm instead of looking error-filled.
+-- Matches the Ghostty "Kanagawa Wave" theme + Herdr's "kanagawa" theme (bg
+-- #1f1f28), so Ghostty + Herdr + Neovim share one palette.
+-- The alternatives below are lazy-loaded; preview/switch via `<leader>sC`.
 return {
-  -- Tokyonight: Clean dark theme inspired by Tokyo's night skyline
-  {
-    "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      style = "night",
-      transparent = true,
-      styles = {
-        comments = { italic = false },
-        sidebars = "transparent",
-        floats = "transparent",
-      },
-    },
-  },
-
-  -- OneDark: Atom's iconic One Dark theme (closest to Zed)
-  {
-    "navarasu/onedark.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      style = "dark", -- dark, darker, cool, deep, warm, warmer
-      transparent = true,
-      code_style = {
-        comments = "none",
-      },
-    },
-  },
-
-  -- Catppuccin: Modern, polished theme with multiple flavors
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      flavour = "mocha", -- latte, frappe, macchiato, mocha
-      transparent_background = true,
-      styles = {
-        comments = {},
-      },
-    },
-  },
-
-  -- Nightfox: Highly customizable with multiple variants
-  {
-    "EdenEast/nightfox.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      options = {
-        transparent = true,
-        styles = {
-          comments = "NONE",
-        },
-      },
-    },
-  },
-
-  -- Kanagawa: Inspired by Japanese art, warm muted colors
   {
     "rebelot/kanagawa.nvim",
     lazy = false,
     priority = 1000,
     opts = {
-      transparent = true,
-      commentStyle = { italic = false },
+      theme = "wave", -- wave (default), dragon (darker), lotus (light)
+      transparent = false,
+      dimInactive = false,
+      commentStyle = { italic = false }, -- set italic = true for softer comments
     },
-  },
-
-  -- Rose Pine: Low-contrast, easy on eyes
-  {
-    "rose-pine/neovim",
-    name = "rose-pine",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      variant = "main", -- main, moon, dawn
-      disable_background = true,
-      styles = {
-        italic = false,
-      },
-    },
-  },
-
-  -- Set default colorscheme
-  {
-    "folke/tokyonight.nvim",
-    config = function()
-      vim.cmd.colorscheme("onedark") -- Change this to switch default: tokyonight, onedark, catppuccin, nightfox, kanagawa, rose-pine
+    config = function(_, opts)
+      require("kanagawa").setup(opts)
+      vim.cmd.colorscheme("kanagawa-wave")
     end,
   },
+
+  -- Alternatives (lazy-loaded; previewable via <leader>sC)
+  { "navarasu/onedark.nvim", lazy = true, opts = { style = "dark", transparent = false } },
+  { "folke/tokyonight.nvim", lazy = true, opts = { style = "night", transparent = false } },
+  { "catppuccin/nvim", name = "catppuccin", lazy = true, opts = { flavour = "mocha" } },
+  { "EdenEast/nightfox.nvim", lazy = true, opts = { options = { transparent = false } } },
+  { "rose-pine/neovim", name = "rose-pine", lazy = true, opts = {} },
 }
