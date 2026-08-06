@@ -5,6 +5,7 @@ return {
   lazy = false,
   opts = {
     bigfile = { enabled = true },
+    explorer = { enabled = true },
     picker = {
       enabled = true,
       win = {
@@ -54,6 +55,14 @@ return {
     words = { enabled = true },
   },
   keys = {
+    -- Explorer (tree sidebar; complements oil.nvim's buffer-style editing)
+    {
+      "<leader>e",
+      function()
+        Snacks.explorer()
+      end,
+      desc = "Explorer (tree)",
+    },
     -- Notifications
     {
       "<leader>n",

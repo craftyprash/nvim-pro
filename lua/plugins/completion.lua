@@ -15,11 +15,19 @@ return {
 
     -- Completion sources (LSP is primary)
     sources = {
-      default = { "lsp", "path", "buffer", "snippets" },
+      default = { "lazydev", "lsp", "path", "buffer", "snippets" },
+      -- lazydev: Neovim Lua API types (only active in lua buffers)
       -- lsp: LSP completion (jdtls for Java)
       -- path: File path completion
       -- buffer: Words from current buffer
       -- snippets: Snippets for common languages
+      providers = {
+        lazydev = {
+          name = "LazyDev",
+          module = "lazydev.integrations.blink",
+          score_offset = 100, -- prefer lazydev over LSP for the vim.* API
+        },
+      },
     },
 
     -- Completion behavior
@@ -29,19 +37,15 @@ return {
           preselect = true,
         },
       },
-      documentation = {
-        auto_show = true,
-        auto_show_delay_ms = 200,
-      },
       accept = {
         auto_brackets = {
           enabled = true, -- Auto-add brackets for functions/methods
         },
       },
       menu = {
+        border = "rounded", -- border belongs on `menu`, not `menu.draw`
         draw = {
           treesitter = { "lsp" },
-          border = "rounded",
           -- columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
         },
       },
