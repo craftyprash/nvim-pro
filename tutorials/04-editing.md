@@ -177,21 +177,22 @@ You can jump between methods in a class without knowing their names:
 
 **Try this**: In a Java file with multiple methods, press `]f` repeatedly to jump from method to method. Then try `daf` on one — it deletes the entire method. `u` to undo.
 
-### Incremental Selection — Expand by Syntax Node
+### Repeating and Reversing Motions
 
-`<C-space>` in normal mode starts a selection at the smallest syntax node under the cursor. Each subsequent `<C-space>` expands the selection to the parent node. `<BS>` shrinks it back.
+The function and class jumps are **repeatable**, the same way `f`/`t` character search is. After any jump, press `;` to repeat it in the same direction and `,` to reverse it:
 
 ```
-Cursor on a variable name
-<C-space>   →  selects the identifier
-<C-space>   →  expands to the expression (e.g. method call)
-<C-space>   →  expands to the statement
-<C-space>   →  expands to the method body
-<C-space>   →  expands to the entire method
-<BS>        →  shrinks back to method body
+]f    → jump to the next function
+;     → next function again
+;     → and again
+,     → step back one (previous function)
 ```
 
-This is useful when you want to select "this expression" without counting characters or thinking about boundaries.
+`;` and `,` adapt to whatever you did last — if your last motion was a plain `f`/`t`/`F`/`T` character search, they repeat that instead. One pair of keys for both.
+
+This is the modern, text-object-first way to move through code by structure. Older configs had a `<C-space>` "incremental selection" that grew a selection node-by-node; the treesitter rewrite dropped it, and text objects do the job in one step — `vif`/`vaf` selects the function inner/outer, `vac` the whole class, no expanding or counting.
+
+**Try this**: `]f` to the next method, `;` a couple more times to skip ahead, then `vaf` to grab the whole method — one keystroke per meaningful unit.
 
 ---
 
@@ -278,10 +279,11 @@ if / af         function inner / outer
 ic / ac         class inner / outer
 ]f / [f         next / prev function start
 ]F / [F         next / prev function end
+]c / [c         next / prev class
 
-Incremental selection:
-<C-space>       expand selection
-<BS>            shrink selection
+Repeat motions:
+;               repeat last jump (]f/[f, or f/t search)
+,               reverse last jump
 
 Move lines:
 <A-j> / <A-k>   move line down / up
