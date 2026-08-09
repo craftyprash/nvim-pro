@@ -148,7 +148,7 @@ Sometimes you need to see two files at the same time — a controller and its se
 `<leader>w|` splits the current window vertically (opens a copy of the current file on the right).  
 `<leader>w-` splits horizontally.
 
-Then use `<C-h>` and `<C-l>` to move between the left and right split, `<C-j>` and `<C-k>` for top and bottom. **This works across tmux panes too** — the same keys move you between neovim splits and tmux panes seamlessly.
+Then use `<C-h>` and `<C-l>` to move between the left and right split, `<C-j>` and `<C-k>` for top and bottom. **When you're inside herdr, the same keys cross into herdr panes too** — herdr-splits makes Neovim splits and herdr panes navigate as one (and `<M-h/j/k/l>` resizes across both).
 
 **Resizing**: Press `<leader>wr` to enter resize mode. Then use `h/j/k/l` to make the current window smaller or larger. Press `Esc` to exit resize mode.
 
@@ -221,7 +221,7 @@ Every time you make a significant jump (open a file, `gd` to a definition, searc
 <leader>w|    split right
 <leader>w-    split below
 <leader>wx    close window
-<C-h/j/k/l>  navigate windows + tmux panes
+<C-h/j/k/l>  navigate windows (+ herdr panes when inside herdr)
 <leader>wr    resize mode
 
 <C-o>         jump back

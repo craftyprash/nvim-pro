@@ -51,12 +51,11 @@ forget one.
 - Tight selections beat dumping the whole file — Claude stays on target and the
   diffs are smaller to review.
 - Moving between the Claude split and your editor uses the same `<C-h/j/k/l>`
-  window navigation as everywhere else. (One caveat: from inside Neovim's
-  built-in `:terminal`, herdr may capture `<C-h/j/k/l>`; `<C-/>` reliably toggles
-  that terminal shut — see [05-terminal.md](05-terminal.md).)
-- Prefer a raw REPL? You can still run `claude` in its own herdr pane. Use
-  claudecode.nvim when you want the in-editor **diff review**; use a bare pane
-  when you just want a chat next to the editor.
+  window navigation as everywhere else — including out of Neovim's `:terminal`.
+  Inside herdr, herdr-splits extends those keys across herdr panes too.
+- Prefer a raw REPL? Launch herdr with `h` and run `claude` in its own herdr
+  pane. Use claudecode.nvim when you want the in-editor **diff review**; use a
+  bare pane when you just want a chat next to the editor.
 
 ---
 
@@ -85,3 +84,16 @@ own config gets real autocomplete and signatures.
 
 After `]f`/`[f`/`]c` (and friends), `;` repeats the jump and `,` reverses it —
 see [04-editing.md](04-editing.md#treesitter-text-objects--syntax-aware-selection).
+
+### Python support
+
+Python now has the same LSP experience as Java/Go/Rust/TS:
+
+- **basedpyright** — types, hover, `gd`/`grr`/`grn`, completion.
+- **ruff** — lint diagnostics, quick-fixes, and import sorting.
+- **format on save** via ruff (organize imports + format) — or `<leader>f`.
+- **debugging** — `F5` launches the current file with debugpy (auto-detects an
+  active virtualenv or a project `.venv`).
+
+All auto-installed by Mason on first launch; nothing to configure.
+

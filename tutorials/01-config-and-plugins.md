@@ -12,18 +12,21 @@
 │   │   ├── autocmds.lua        # autocommands (last position, yank highlight, etc.)
 │   │   └── lazy.lua            # plugin manager bootstrap
 │   └── plugins/                # one file per plugin or logical group
-│       ├── snacks.lua          # picker, terminal, git, dashboard, notifier
+│       ├── snacks.lua          # picker, explorer (tree), terminal, git, dashboard
 │       ├── lsp-lang.lua        # LSP servers + Mason auto-install
 │       ├── completion.lua      # blink.cmp
 │       ├── coding.lua          # gitsigns, surround, comments, todo-comments
 │       ├── explorer.lua        # oil.nvim
 │       ├── debug.lua           # nvim-dap + UI
 │       ├── treesitter.lua      # syntax + textobjects
+│       ├── claudecode.lua      # Claude Code integration
+│       ├── lazydev.lua         # Lua API completion for editing this config
+│       ├── herdr-splits.lua    # seamless nav/resize with herdr panes
 │       ├── which-key.lua       # keybinding discovery
 │       ├── persistence.lua     # session management
 │       ├── diffview.lua        # git diffs and file history
 │       ├── formatting.lua      # conform.nvim (format on save)
-│       ├── colorscheme.lua     # 6 themes
+│       ├── colorscheme.lua     # theme (kanagawa) + alternatives
 │       └── lualine.lua         # statusline
 └── tutorials/                  # this series
 ```
@@ -121,9 +124,11 @@ Manages LSP servers, formatters, and debug adapters. All tools are **auto-instal
 
 | Category | Tools |
 |----------|-------|
-| LSP | jdtls, gopls, rust_analyzer, vtsls, eslint-lsp, tailwindcss, lua-language-server |
-| Formatters | stylua, prettier, google-java-format |
-| Debug adapters | java-debug-adapter, delve, codelldb |
+| LSP | jdtls, gopls, rust_analyzer, vtsls, eslint-lsp, tailwindcss, lua-language-server, basedpyright, ruff |
+| Formatters | stylua, prettier, google-java-format, ruff (Python) |
+| Debug adapters | java-debug-adapter, delve, codelldb, debugpy |
+
+Python uses **basedpyright** (types, hover, completion) and **ruff** (lint, quick-fixes, import sorting + formatting) — the current fast, modern combo.
 
 If a tool is missing, open Mason and press `i` to install it manually.
 

@@ -23,7 +23,7 @@ The typical flow:
 4. <C-/>          hide the terminal → back to your file, process still running
 ```
 
-Or from inside terminal mode, `<C-h>` / `<C-l>` move you to other neovim windows directly (vim-tmux-navigator works from inside the terminal). You don't have to `<Esc><Esc>` first if you just want to move to a split.
+Or from inside terminal mode, `<C-h/j/k/l>` move you to other neovim windows directly — you don't have to `<Esc><Esc>` first if you just want to move to a split. (Inside herdr, herdr-splits extends the same keys to cross into herdr panes.)
 
 **Try this**: Press `<C-/>` to open the terminal. Run `pwd` — it should be your project root (smart_cwd sets CWD on startup). Run `ls` to see your project files. Press `<Esc><Esc>` to exit terminal mode, then scroll up with `k` to see the output. Press `<C-/>` to hide it.
 
@@ -123,18 +123,19 @@ The lower split stays visible with the Quarkus output scrolling. `<C-j>` jumps d
 
 ---
 
-## When to Use a Tmux Window Instead
+## When to Use a Separate Terminal Instead
 
-The floating terminal is ideal for **short-lived commands** and processes that belong to the current project session. Use a **tmux window** when:
+The floating terminal is ideal for **short-lived commands** and processes that belong to the current project session. Reach for a separate **Ghostty tab/window** (or a **herdr** pane/workspace) when:
 
 - A process needs to survive beyond your neovim session (e.g. a database, a background service)
 - You need a full-screen terminal without neovim's chrome
 - You're connecting to a remote server or running something that produces very high-frequency output
-- You're running two entirely different projects simultaneously (one per tmux window)
+- You're running two entirely different projects simultaneously
+- You're running a coding agent (Claude, etc.) — that's exactly what herdr is for; launch it with `h`
 
-Within a single project, the neovim terminal handles everything. The tmux panes and windows are for cross-project or cross-session concerns.
+Within a single project, the neovim terminal handles everything. Separate Ghostty tabs and herdr panes/workspaces are for cross-project or cross-session concerns.
 
-`<C-h/j/k/l>` moves between neovim splits and tmux panes seamlessly — there's no mental mode-switch required.
+`<C-h/j/k/l>` moves between neovim splits with no mode-switch; inside herdr it also crosses into herdr panes (via herdr-splits).
 
 ---
 
@@ -144,7 +145,7 @@ Within a single project, the neovim terminal handles everything. The tmux panes 
 <C-/>           toggle floating terminal (open / hide)
 <Esc><Esc>      exit terminal mode → normal mode in terminal buffer
 i or a          enter terminal mode from normal mode
-<C-h/j/k/l>    navigate to other windows / tmux panes (works from terminal)
+<C-h/j/k/l>    navigate to other windows (works from terminal; + herdr panes in herdr)
 
 Common terminal commands:
 mvn quarkus:dev                   start Quarkus dev mode

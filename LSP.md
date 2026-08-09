@@ -1,6 +1,6 @@
 # LSP & Debug Configuration
 
-Complete guide to Language Server Protocol (LSP) and debugging setup for Java, Go, Rust, TypeScript, and Lua.
+Complete guide to Language Server Protocol (LSP) and debugging setup for Java, Go, Rust, TypeScript, Python, and Lua.
 
 ## LSP Configuration
 
@@ -19,6 +19,7 @@ Uses native `vim.lsp.config()` and `vim.lsp.enable()` instead of lspconfig wrapp
 | Go | gopls | gofumpt | staticcheck |
 | Rust | rust_analyzer | rustfmt | clippy |
 | TypeScript/React | vtsls | prettier | eslint |
+| Python | basedpyright | ruff | ruff |
 | Lua | lua_ls | stylua | Built-in |
 | Tailwind CSS | tailwindcss | - | - |
 

@@ -144,18 +144,21 @@ Inside neovim, `<leader>fp` (zoxide picker) shows your most-visited directories.
 
 Sometimes you genuinely need two projects side by side — e.g. reading an API contract from one service while implementing the client in another.
 
-**Option 1: Two tmux windows**
+**Option 1: A Ghostty tab per project**
 ```
-<prefix>c    # new tmux window
+cmd+t        # new Ghostty tab
 z second-project
 nvim .
 ```
-Each tmux window runs its own neovim session. `<C-h/j/k/l>` navigates within each neovim instance. Switch between tmux windows with `<prefix>1`, `<prefix>2`, etc.
+Each tab runs its own neovim session with its own CWD, LSP, and git context. `<C-h/j/k/l>` navigates splits within each. Switch tabs with `cmd+shift+←/→`. This is the simplest way to keep two projects genuinely independent.
 
-**Option 2: Multiple neovim splits pointing at different projects**
+**Option 2: herdr panes/workspaces**
+If you're already in herdr (launched with `h`) — e.g. running a coding agent alongside your editor — split a pane (`prefix + |`) or open a new workspace (`prefix + Shift + n`) for the second project. `<C-h/j/k/l>` crosses seamlessly between neovim splits and herdr panes.
+
+**Option 3: Multiple neovim splits pointing at different projects**
 Not recommended — CWD is global in neovim, so only one project can be "active" for LSP, git, and file-finding at a time.
 
-For most multi-project work, tmux windows are the right tool. Use neovim's split workflow for files within a single project.
+For most multi-project work, a Ghostty tab per project is the right tool. Use neovim's split workflow for files within a single project.
 
 ---
 

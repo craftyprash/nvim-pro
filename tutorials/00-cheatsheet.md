@@ -219,7 +219,7 @@ Prefix `i` = inner (no surrounding whitespace/delimiters), `a` = around (include
 | `<leader>w\|` | Split right (vertical) |
 | `<leader>w-` | Split below (horizontal) |
 | `<leader>wx` | Close current window |
-| `<C-h/j/k/l>` | Navigate between windows **and** tmux panes |
+| `<C-h/j/k/l>` | Navigate between windows (**and** herdr panes when inside herdr) |
 | `<leader>wr` | Enter resize mode (h/j/k/l to resize, Esc exits) |
 
 ## Buffers

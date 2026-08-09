@@ -6,7 +6,7 @@ A minimal yet essential Neovim configuration built for modern development workfl
 
 - **Minimal but Essential**: Only plugins that directly enhance productivity
 - **Modern Neovim 0.12**: Leverages native LSP (`vim.lsp.config`/`vim.lsp.enable`) instead of lspconfig wrappers
-- **Keyboard-First**: Tmux-style keybindings, no mouse dependency
+- **Keyboard-First**: keyboard-driven window management, no mouse dependency
 - **Transparent UI**: All colorschemes use terminal background
 - **Performance**: Lazy loading, disabled unnecessary built-ins, optimized for fast startup
 
@@ -24,7 +24,7 @@ A minimal yet essential Neovim configuration built for modern development workfl
 │   │   ├── keymaps.lua     # Global keybindings
 │   │   └── autocmds.lua    # Auto-commands (highlight yank, restore cursor, etc.)
 │   └── plugins/
-│       ├── lsp-lang.lua    # LSP configuration (Java, Go, Rust, TS, Lua)
+│       ├── lsp-lang.lua    # LSP configuration (Java, Go, Rust, TS, Python, Lua)
 │       ├── treesitter.lua  # Syntax highlighting
 │       ├── completion.lua  # Blink.cmp for autocompletion
 │       ├── formatting.lua  # Conform.nvim for code formatting
@@ -166,12 +166,12 @@ See [LSP.md](LSP.md) for complete setup and usage.
 
 ### 10. Keymaps (`keymaps.lua`)
 
-**Window Management** (Tmux-style):
+**Window Management**:
 - `<leader>w|` - Split vertical
 - `<leader>w-` - Split horizontal
 - `<leader>wx` - Close window
 - `<leader>wr` - Resize mode (hjkl to resize, smart edge detection)
-- `<C-h/j/k/l>` - Navigate windows
+- `<C-h/j/k/l>` - Navigate windows (and herdr panes when inside herdr, via herdr-splits)
 
 **Buffer Navigation**:
 - `<S-h>/<S-l>` - Previous/next buffer

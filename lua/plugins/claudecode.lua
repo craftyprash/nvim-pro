@@ -2,8 +2,8 @@
 -- Runs a small WebSocket server that the `claude` CLI connects to, so Claude
 -- can see your selection/open buffers and propose diffs you accept in Neovim.
 -- Uses Snacks for the terminal split (already installed). Requires the `claude`
--- CLI on PATH. Your <C-h/j/k/l> navigation (vim-tmux-navigator / Herdr) still
--- works to hop in and out of the Claude split.
+-- CLI on PATH. Your <C-h/j/k/l> navigation works to hop in and out of the
+-- Claude split (herdr-splits extends it across herdr panes when inside herdr).
 return {
   "coder/claudecode.nvim",
   dependencies = { "folke/snacks.nvim" },
