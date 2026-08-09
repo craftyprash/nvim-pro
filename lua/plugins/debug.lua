@@ -162,6 +162,33 @@ return {
         },
       }
 
+      -- Python (debugpy, installed via Mason)
+      dap.adapters.python = {
+        type = "executable",
+        command = vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python",
+        args = { "-m", "debugpy.adapter" },
+      }
+      dap.configurations.python = {
+        {
+          type = "python",
+          request = "launch",
+          name = "Launch file",
+          program = "${file}",
+          -- Prefer an activated venv, then a project .venv, then the active python.
+          pythonPath = function()
+            local venv = os.getenv("VIRTUAL_ENV")
+            if venv then
+              return venv .. "/bin/python"
+            end
+            local cwd = vim.fn.getcwd()
+            if vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
+              return cwd .. "/.venv/bin/python"
+            end
+            return vim.fn.exepath("python3") ~= "" and vim.fn.exepath("python3") or "python"
+          end,
+        },
+      }
+
       -- Setup dap-ui
       local dapui = require("dapui")
       dapui.setup({

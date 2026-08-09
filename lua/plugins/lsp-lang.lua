@@ -311,6 +311,31 @@ return {
       -- TAILWIND
       vim.lsp.config("tailwindcss", {})
 
+      -- PYTHON
+      -- Modern split: basedpyright owns types/hover/completion; ruff owns
+      -- linting, quick-fixes, and import sorting (formatting is done by conform
+      -- via ruff — see formatting.lua). basedpyright is the maintained,
+      -- feature-richer pyright fork.
+      vim.lsp.config("basedpyright", {
+        settings = {
+          basedpyright = {
+            analysis = {
+              typeCheckingMode = "standard", -- off | basic | standard | strict
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+              diagnosticMode = "openFilesOnly",
+            },
+          },
+        },
+      })
+
+      vim.lsp.config("ruff", {
+        on_attach = function(client)
+          -- Let basedpyright own hover; avoid a duplicate ruff hover popup.
+          client.server_capabilities.hoverProvider = false
+        end,
+      })
+
       -- Enable all servers
       vim.lsp.enable({
         "gopls",
@@ -319,6 +344,8 @@ return {
         "vtsls",
         "eslint",
         "tailwindcss",
+        "basedpyright",
+        "ruff",
       })
     end,
   },
@@ -342,10 +369,14 @@ return {
         "prettier",
         "google-java-format",
         "rust-analyzer",
+        -- Python
+        "basedpyright",
+        "ruff",
         -- Debug adapters
         "java-debug-adapter",
         "delve",
         "codelldb",
+        "debugpy",
       }
       local function install_tools()
         for _, tool in ipairs(ensure_installed) do

@@ -30,6 +30,9 @@ return {
       javascriptreact = { "prettier" },
       json = { "prettier" },
       yaml = { "prettier" },
+
+      -- Python: ruff sorts imports then formats (Black-compatible, very fast)
+      python = { "ruff_organize_imports", "ruff_format" },
     },
 
     -- Format on save
