@@ -53,6 +53,14 @@ map("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
 map("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
 map("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
 
+-- Same from terminal mode, so you can jump straight out of a :terminal back to
+-- the editor. Inside herdr, herdr-splits overrides these to also cross into herdr
+-- panes; this is the plain-Neovim fallback.
+map("t", "<C-h>", [[<C-\><C-n><C-w>h]], { desc = "Go to left window" })
+map("t", "<C-j>", [[<C-\><C-n><C-w>j]], { desc = "Go to lower window" })
+map("t", "<C-k>", [[<C-\><C-n><C-w>k]], { desc = "Go to upper window" })
+map("t", "<C-l>", [[<C-\><C-n><C-w>l]], { desc = "Go to right window" })
+
 -- Clear search highlight
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
 
