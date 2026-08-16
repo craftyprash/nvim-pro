@@ -97,3 +97,19 @@ Python now has the same LSP experience as Java/Go/Rust/TS:
 
 All auto-installed by Mason on first launch; nothing to configure.
 
+### Local autocomplete (Ollama) vs Claude — the tiered split
+
+Two AI layers, each for what it's actually good at:
+
+- **Local, always-on — inline autocomplete.** [minuet-ai.nvim](https://github.com/milanglacier/minuet-ai.nvim) shows ghost-text suggestions from a small coder model (`qwen2.5-coder:7b`) served by local Ollama. Free, private, works offline, low-latency. This is where a local model genuinely shines. Requires `ollama pull qwen2.5-coder:7b`; if Ollama isn't running it simply shows nothing.
+
+  ```
+  <A-a>   accept suggestion      <A-l>   accept one line
+  <A-]>   next suggestion        <A-[>   previous
+  <A-e>   dismiss
+  ```
+
+- **Claude, on-demand — the real work.** Refactors, debugging, "why is this broken", multi-file changes, architecture. A 7B local model won't match it, so hand those to `claudecode.nvim` (`<leader>a*`) or `claude` in a herdr pane.
+
+Rule of thumb: let the local model finish your line; call Claude when you need it to *think*.
+
