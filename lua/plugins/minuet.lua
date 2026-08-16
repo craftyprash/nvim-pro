@@ -14,6 +14,12 @@
 return {
   "milanglacier/minuet-ai.nvim",
   event = "InsertEnter",
+  keys = {
+    -- Flip ghost-text suggestions on/off for the session (e.g. when the model's
+    -- output is noisy or you want to focus). Permanent off: set enabled = false
+    -- below, or delete this file, then :Lazy sync.
+    { "<leader>at", "<cmd>Minuet virtualtext toggle<cr>", desc = "Toggle AI autocomplete" },
+  },
   config = function()
     require("minuet").setup({
       provider = "openai_fim_compatible",
